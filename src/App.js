@@ -4,8 +4,18 @@ import "./App.css";
 import SearchBooks from "./SearchBooks";
 import ListBooks from "./ListBooks";
 import { Route } from "react-router-dom";
+import * as BooksAPI from "./BooksAPI";
 
 class BooksApp extends React.Component {
+  state = {
+    books: []
+  };
+  componentDidMount() {
+    BooksAPI.getAll().then(returnedValue => {
+      console.log(returnedValue);
+      this.setState({ books: returnedValue });
+    });
+  }
   render() {
     return (
       <div className="app">
@@ -17,6 +27,7 @@ class BooksApp extends React.Component {
               onOpenSearch={() => {
                 this.setState({ showSearchPage: true });
               }}
+              books={this.state.books}
             />
           )}
         />
