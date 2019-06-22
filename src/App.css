@@ -69,6 +69,11 @@ body,
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   font-size: 0;
   outline: 0;
+
+  border-width: 2px;
+  border-style: outset;
+  border-color: rgb(240, 240, 240);
+  border-image: initial;
 }
 
 .open-search a:hover {
@@ -113,7 +118,7 @@ body,
   font-size: 0;
   border: none;
   outline: none;
-  background-color: buttonface;
+  background-color: rgb(240, 240, 240);
 }
 
 button:active {
