@@ -8,7 +8,7 @@ class Book extends React.Component {
         <div className="book-top">
           <img
             className="book-cover"
-            alt="Book Cover"
+            alt={`${this.props.book.title} Book Cover`}
             src={this.props.book.imageLinks.thumbnail}
           />
 
