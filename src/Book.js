@@ -8,8 +8,16 @@ class Book extends React.Component {
         <div className="book-top">
           <img
             className="book-cover"
-            alt={`${this.props.book.title} Book Cover`}
-            src={this.props.book.imageLinks.thumbnail}
+            alt={
+              this.props.book.imageLinks
+                ? `${this.props.book.title} Book Cover`
+                : `No Book Cover available for ${this.props.book.title}`
+            }
+            src={
+              this.props.book.imageLinks
+                ? this.props.book.imageLinks.thumbnail
+                : "./images/NoCover.jpg"
+            }
           />
 
           <BookShelfChanger
