@@ -11,6 +11,9 @@ class Bookshelf extends React.Component {
             books={this.props.books.filter(
               book => book.shelf === this.props.shelf
             )}
+            onChangeBookShelf={(newShelf, book) => {
+              this.props.onChangeBookShelf(newShelf, book);
+            }}
           />
         </div>
       </div>

@@ -15,16 +15,25 @@ class ListBooks extends React.Component {
               bookshelfTitle="Currently Reading"
               shelf="currentlyReading"
               books={this.props.books}
+              onChangeBookShelf={(newShelf, book) => {
+                this.props.onChangeBookShelf(newShelf, book);
+              }}
             />
             <Bookshelf
               bookshelfTitle="Want to Read"
               shelf="wantToRead"
               books={this.props.books}
+              onChangeBookShelf={(newShelf, book) => {
+                this.props.onChangeBookShelf(newShelf, book);
+              }}
             />
             <Bookshelf
               bookshelfTitle="Read"
               shelf="read"
               books={this.props.books}
+              onChangeBookShelf={(newShelf, book) => {
+                this.props.onChangeBookShelf(newShelf, book);
+              }}
             />
           </div>
         </div>

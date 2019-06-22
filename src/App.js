@@ -28,6 +28,9 @@ class BooksApp extends React.Component {
                 this.setState({ showSearchPage: true });
               }}
               books={this.state.books}
+              onChangeBookShelf={(newShelf, book) => {
+                this.changeBookShelf(newShelf, book);
+              }}
             />
           )}
         />
@@ -43,6 +46,22 @@ class BooksApp extends React.Component {
         />
       </div>
     );
+  }
+  changeBookShelf(newShelf, book) {
+    const { id } = book;
+
+    BooksAPI.update(book, newShelf).then(shelves => {
+      if (shelves[newShelf].includes(id)) {
+        this.setState(currentState => {
+          return currentState.books.map(mappedBook => {
+            if (mappedBook.id === id) {
+              mappedBook.shelf = newShelf;
+            }
+            return mappedBook;
+          });
+        });
+      }
+    });
   }
 }
 
