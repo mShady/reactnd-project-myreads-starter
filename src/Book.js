@@ -18,6 +18,7 @@ class Book extends React.Component {
                 id: this.props.book.id
               });
             }}
+            selectedShelf={this.props.book.shelf}
           />
         </div>
         <div className="book-title">{this.props.book.title}</div>

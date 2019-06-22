@@ -4,7 +4,10 @@ class BookShelfChanger extends React.Component {
   render() {
     return (
       <div className="book-shelf-changer">
-        <select onChange={e => this.props.onShelfChanged(e.target.value)}>
+        <select
+          onChange={e => this.props.onShelfChanged(e.target.value)}
+          value={this.props.selectedShelf}
+        >
           <option value="move" disabled>
             Move to...
           </option>
