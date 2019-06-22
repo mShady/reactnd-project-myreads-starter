@@ -22,9 +22,12 @@ class Book extends React.Component {
           />
         </div>
         <div className="book-title">{this.props.book.title}</div>
-        <div className="book-authors">
-          {this.props.book.authors.join(" and ")}
-        </div>
+
+        {this.props.book.authors && (
+          <div className="book-authors">
+            {this.props.book.authors.join(" and ")}
+          </div>
+        )}
       </div>
     );
   }
