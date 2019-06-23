@@ -22,9 +22,7 @@ class Book extends React.Component {
 
           <BookShelfChanger
             onShelfChanged={newShelf => {
-              this.props.onChangeBookShelf(newShelf, {
-                id: this.props.book.id
-              });
+              this.props.onChangeBookShelf(newShelf, this.props.book);
             }}
             selectedShelf={this.props.book.shelf}
           />
