@@ -2,11 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import BooksGrid from "./BooksGrid";
 import * as BooksAPI from "./BooksAPI";
+import { debounce } from "throttle-debounce";
 
 class SearchBooks extends React.Component {
-  state = {
-    searchResultsBooks: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchResultsBooks: [],
+      searchTerms: ""
+    };
+    this.SearchDebounced = debounce(400, this.Search);
+  }
+
   render() {
     return (
       <div className="search-books">
@@ -18,7 +25,13 @@ class SearchBooks extends React.Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              onChange={e => this.Search(e.target.value)}
+              value={this.state.searchTerms}
+              onChange={e =>
+                this.setState(
+                  { searchTerms: e.target.value },
+                  this.SearchDebounced
+                )
+              }
             />
           </div>
         </div>
@@ -34,7 +47,8 @@ class SearchBooks extends React.Component {
     );
   }
 
-  Search(searchTerms) {
+  Search() {
+    let { searchTerms } = this.state;
     BooksAPI.search(searchTerms).then(booksResults => {
       if (booksResults && Array.isArray(booksResults)) {
         this.setState(() => ({
