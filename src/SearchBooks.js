@@ -64,6 +64,14 @@ class SearchBooks extends React.Component {
 
   Search() {
     let { searchTerms } = this.state;
+
+    if (searchTerms === "") {
+      this.setState(() => ({
+        searchResultsBooks: []
+      }));
+      return;
+    }
+
     BooksAPI.search(searchTerms).then(booksResults => {
       if (booksResults && Array.isArray(booksResults)) {
         this.setState(() => ({
