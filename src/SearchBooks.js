@@ -15,6 +15,21 @@ class SearchBooks extends React.Component {
   }
 
   render() {
+    let books = this.state.searchResultsBooks.map(bookResult => {
+      let shelvedBook = this.props.shelvedBooks.filter(
+        book => book.id === bookResult.id
+      );
+      if (
+        shelvedBook &&
+        Array.isArray(shelvedBook) &&
+        shelvedBook.length === 1
+      ) {
+        bookResult.shelf = shelvedBook[0].shelf;
+      } else {
+        bookResult.shelf = "none";
+      }
+      return bookResult;
+    });
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -37,7 +52,7 @@ class SearchBooks extends React.Component {
         </div>
         <div className="search-books-results">
           <BooksGrid
-            books={this.state.searchResultsBooks}
+            books={books}
             onChangeBookShelf={(newShelf, book) => {
               this.props.onChangeBookShelf(newShelf, book);
             }}
@@ -52,21 +67,7 @@ class SearchBooks extends React.Component {
     BooksAPI.search(searchTerms).then(booksResults => {
       if (booksResults && Array.isArray(booksResults)) {
         this.setState(() => ({
-          searchResultsBooks: booksResults.map(bookResult => {
-            let shelvedBook = this.props.shelvedBooks.filter(
-              book => book.id === bookResult.id
-            );
-            if (
-              shelvedBook &&
-              Array.isArray(shelvedBook) &&
-              shelvedBook.length === 1
-            ) {
-              bookResult.shelf = shelvedBook[0].shelf;
-            } else {
-              bookResult.shelf = "none";
-            }
-            return bookResult;
-          })
+          searchResultsBooks: booksResults
         }));
       } else {
         this.setState(() => ({
