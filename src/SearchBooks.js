@@ -1,8 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BooksGrid from "./BooksGrid";
+import * as BooksAPI from "./BooksAPI";
 
 class SearchBooks extends React.Component {
+  state = {
+    searchResultsBooks: []
+  };
   render() {
     return (
       <div className="search-books">
@@ -14,13 +18,13 @@ class SearchBooks extends React.Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              onChange={e => this.props.onSearch(e.target.value)}
+              onChange={e => this.Search(e.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
           <BooksGrid
-            books={this.props.books}
+            books={this.state.searchResultsBooks}
             onChangeBookShelf={(newShelf, book) => {
               this.props.onChangeBookShelf(newShelf, book);
             }}
@@ -28,6 +32,34 @@ class SearchBooks extends React.Component {
         </div>
       </div>
     );
+  }
+
+  Search(searchTerms) {
+    BooksAPI.search(searchTerms).then(booksResults => {
+      if (booksResults && Array.isArray(booksResults)) {
+        this.setState(() => ({
+          searchResultsBooks: booksResults.map(bookResult => {
+            let shelvedBook = this.props.shelvedBooks.filter(
+              book => book.id === bookResult.id
+            );
+            if (
+              shelvedBook &&
+              Array.isArray(shelvedBook) &&
+              shelvedBook.length === 1
+            ) {
+              bookResult.shelf = shelvedBook[0].shelf;
+            } else {
+              bookResult.shelf = "none";
+            }
+            return bookResult;
+          })
+        }));
+      } else {
+        this.setState(() => ({
+          searchResultsBooks: []
+        }));
+      }
+    });
   }
 }
 
